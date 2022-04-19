@@ -78,35 +78,35 @@ resource "azurerm_network_interface_security_group_association" "main" {
   network_security_group_id = azurerm_network_security_group.spoke2-app.id
 }
 
-# resource "azurerm_linux_virtual_machine" "azure_spoke2_vm" {
-#   name                            = "${var.azure_spoke2_name}-app"
-#   resource_group_name             = module.azure_spoke_2.vpc.resource_group
-#   location                        = var.azure_spoke2_region
-#   size                            = var.azure_test_instance_size
-#   admin_username                  = "ubuntu"
-#   admin_password                  = var.ace_password
-#   disable_password_authentication = false
-#   network_interface_ids = [
-#     azurerm_network_interface.main.id,
-#   ]
-#   source_image_reference {
-#     publisher = "Canonical"
-#     offer     = "UbuntuServer"
-#     sku       = "18.04-LTS"
-#     version   = "latest"
-#   }
-#   # source_image_reference {
-#   #   publisher = "canonical"
-#   #   offer     = "0001-com-ubuntu-server-focal"
-#   #   version   = "latest"
-#   # }
-#   os_disk {
-#     storage_account_type = "Standard_LRS"
-#     caching              = "ReadWrite"
-#   }
-#   custom_data = base64encode(local.bu2_app_user_data)
-# }
+resource "azurerm_linux_virtual_machine" "azure_spoke2_vm" {
+  name                            = "${var.azure_spoke2_name}-app"
+  resource_group_name             = module.azure_spoke_2.vpc.resource_group
+  location                        = var.azure_spoke2_region
+  size                            = var.azure_test_instance_size
+  admin_username                  = "ubuntu"
+  admin_password                  = var.ace_password
+  disable_password_authentication = false
+  network_interface_ids = [
+    azurerm_network_interface.main.id,
+  ]
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+  # source_image_reference {
+  #   publisher = "canonical"
+  #   offer     = "0001-com-ubuntu-server-focal"
+  #   version   = "latest"
+  # }
+  os_disk {
+    storage_account_type = "Standard_LRS"
+    caching              = "ReadWrite"
+  }
+  custom_data = base64encode(local.bu2_app_user_data)
+}
 
-# output "azure_spoke2_app_private_ip" {
-#   value = azurerm_linux_virtual_machine.azure_spoke2_vm.private_ip_address
-# }
+output "azure_spoke2_app_private_ip" {
+  value = azurerm_linux_virtual_machine.azure_spoke2_vm.private_ip_address
+}
